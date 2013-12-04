@@ -14,9 +14,24 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
-end
 
+  
+  x,y,z=[a,b,c].sort
+  
+  raise TriangleError, "Sides make no sense" if x+y<=z
+  
+  if a<=0 && b<=0 && c<=0
+     raise TriangleError, "Side lengths must be positive"
+  end
+
+
+  return :scalene if a!=b&&a!=c&&b!=c
+  return :equilateral if a==b&&b==c
+  if (a==b && a!=c) || (a==c && a!=b) || (b==c && b!=a)
+    return :isosceles
+  end
+
+end
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
 end
