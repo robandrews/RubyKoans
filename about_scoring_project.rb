@@ -31,7 +31,45 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  # not elegant...
+  score=0
+  until dice.length==0
+    if dice[0]==dice[1]&&dice[0]==dice[2]
+      if dice[0]==1
+        score+=1000
+      else
+        score+=dice[0]*100
+      end
+      3.times do 
+        dice.shift
+      end
+    else
+      temp=dice.shift
+      if temp==1
+        score+=100
+      elsif temp==5
+        score+=50
+      end
+    end
+  end
+  score
 end
+
+# def contains_trips?(arr)
+#   if arr.length<2
+#     false
+#   else
+#     ret=false
+#     r1,r2=0,0
+#     for i in (0..arr.length-3)
+#       if arr[i]==arr[i+1]&&arr[i]==arr[i+2]
+#         r1,r2=i,i+2
+#         ret=true 
+#       end
+#     end
+#   end
+#   [ret, r1, r2]
+# end
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
@@ -67,7 +105,7 @@ class AboutScoringProject < Neo::Koan
   end
 
   def test_score_of_mixed_is_sum
-    assert_equal 250, score([2,5,2,2,3])
+    assert_equal 250, score([2,5,2,2,2,3])
     assert_equal 550, score([5,5,5,5])
     assert_equal 1100, score([1,1,1,1])
     assert_equal 1200, score([1,1,1,1,1])
